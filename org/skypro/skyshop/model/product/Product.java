@@ -12,6 +12,7 @@ public abstract class Product implements Searchable {
     private String name;
     private final UUID id;
 
+
     @Override
     public UUID getId() {
         return id;

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public class SimpleProduct extends Product {
     private int price;
-    private final UUID id;
 
     public SimpleProduct(String name, int price, UUID id) throws IllegalArgumentException{
         super(name, id);
@@ -12,7 +11,6 @@ public class SimpleProduct extends Product {
             throw new IllegalArgumentException("Неверная цена.");
         }
         this.price = price;
-        this.id = id;
     }
 
     @Override
