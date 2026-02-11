@@ -5,9 +5,7 @@ import java.util.UUID;
 public class DiscountedProduct extends Product {
     private int basePrice;
     private double discountInPercentInt; // от 0 до 100
-    private Product[] products = new Product[5];
     private boolean isPriceCalculated;
-    private final UUID id;
 
     public DiscountedProduct(String name, int basePrice, int discountInPercentInt, UUID id) throws IllegalArgumentException{
         super(name, id);
@@ -19,7 +17,6 @@ public class DiscountedProduct extends Product {
         }
         this.basePrice = basePrice;
         this.discountInPercentInt = discountInPercentInt;
-        this.id = id;
     }
 
     @Override
