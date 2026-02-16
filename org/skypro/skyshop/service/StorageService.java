@@ -1,12 +1,11 @@
 package org.skypro.skyshop.service;
 
+import org.skypro.skyshop.exception.NoSuchProductException;
 import org.skypro.skyshop.model.article.Article;
-import org.skypro.skyshop.model.product.FixPriceProduct;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.product.SimpleProduct;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,7 +29,7 @@ public class StorageService {
         articles.put(UUID.randomUUID(), new Article("Заголовок №3", "Длинный текст", UUID.randomUUID()));
     }
 
-    public Collection<Product> getProducts(){
+    public Collection<Product> getProducts() {
         return products.values();
     }
 
@@ -38,15 +37,20 @@ public class StorageService {
         return articles.values();
     }
 
-    public Collection<Searchable> articlesAndProducts(){
+    public Collection<Searchable> articlesAndProducts() {
         return Stream.concat(
                 getProducts().stream().map(product -> (Searchable) product),
                 getArticles().stream().map(article -> (Searchable) article)
         ).collect(Collectors.toList());
     }
 
-    public Optional<Product> getProductById(UUID id) {
-        return Optional.ofNullable(products.get(id));
+    @Deprecated
+    public Product getProductById(UUID id) {
+        Product product = products.get(id);
+        if (product == null) {
+            throw new NoSuchProductException(id);
+        }
+        return product;
     }
 
 }
