@@ -1,6 +1,7 @@
 package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.model.article.Article;
+import org.skypro.skyshop.model.product.FixPriceProduct;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.product.SimpleProduct;
 import org.skypro.skyshop.model.search.Searchable;
@@ -19,9 +20,10 @@ public class StorageService {
     public StorageService() {
         this.products = new HashMap<>();
         this.articles = new HashMap<>();
-        products.put(UUID.randomUUID(), new SimpleProduct("Огурец", 50, UUID.randomUUID()));
-        products.put(UUID.randomUUID(), new SimpleProduct("Авокадо", 100, UUID.randomUUID()));
-        products.put(UUID.randomUUID(), new SimpleProduct("Лук", 30, UUID.randomUUID()));
+        products.put(UUID.fromString("00000000-0000-0000-0000-000000000001"), new SimpleProduct("Авокадо", 50, UUID.fromString("00000000-0000-0000-0000-000000000001")));
+        products.put(UUID.fromString("00000000-0000-0000-0000-000000000002"), new SimpleProduct("Томат", 100, UUID.fromString("00000000-0000-0000-0000-000000000002")));
+        products.put(UUID.fromString("00000000-0000-0000-0000-000000000003"), new SimpleProduct("Лук", 30, UUID.fromString("00000000-0000-0000-0000-000000000003")));
+        products.put(UUID.fromString("00000000-0000-0000-0000-000000000004"), new SimpleProduct("Огурец", 50, UUID.fromString("00000000-0000-0000-0000-000000000004")));
 
         articles.put(UUID.randomUUID(), new Article("Заголовок №1", "Интересный текст", UUID.randomUUID()));
         articles.put(UUID.randomUUID(), new Article("Заголовок №2", "Важный текст", UUID.randomUUID()));
@@ -41,6 +43,10 @@ public class StorageService {
                 getProducts().stream().map(product -> (Searchable) product),
                 getArticles().stream().map(article -> (Searchable) article)
         ).collect(Collectors.toList());
+    }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(products.get(id));
     }
 
 }
