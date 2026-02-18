@@ -3,6 +3,7 @@ package org.skypro.skyshop.service;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 public class SearchResult {
     final String id;
@@ -39,5 +40,20 @@ public class SearchResult {
 
         System.out.println("→ Получен SearchResult: " + result);
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SearchResult that = (SearchResult) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(contentType, that.contentType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, contentType);
     }
 }

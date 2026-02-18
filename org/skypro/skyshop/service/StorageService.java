@@ -45,12 +45,12 @@ public class StorageService {
     }
 
     @Deprecated
-    public Product getProductById(UUID id) {
+    public Optional<Product> getProductById(UUID id) {
         Product product = products.get(id);
         if (product == null) {
             throw new NoSuchProductException(id);
         }
-        return product;
+        return Optional.ofNullable(product);
     }
 
 }
