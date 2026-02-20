@@ -27,8 +27,14 @@ public class BasketService {
 
     public void addProductToBasket(UUID productId) {
         System.out.println("Поиск продукта по ID: " + productId);
-        Product product = storageService.getProductById(productId); // Исключение выбросится внутри getProductById
+
+        // Извлекаем Product из Optional или бросаем исключение
+        Product product = storageService.getProductById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Товар не найден: " + productId));
+
         System.out.println("Найден продукт: " + product.getName() + ", цена: " + product.getPrice());
+
+        // Добавляем продукт в корзину (предполагается, что метод принимает UUID)
         productBasket.addProduct(productId);
     }
 
@@ -37,7 +43,10 @@ public class BasketService {
 
         List<BasketItem> basketItems = itemsMap.entrySet().stream()
                 .map(entry -> {
-                    Product product = storageService.getProductById(entry.getKey()); // Исключение выбросится здесь
+                    Product product = storageService.getProductById(entry.getKey())
+                            .orElseThrow(() -> new IllegalArgumentException(
+                                    "Товар не найден в хранилище: " + entry.getKey()
+                            ));
                     return new BasketItem(product, entry.getValue());
                 })
                 .collect(Collectors.toList());
